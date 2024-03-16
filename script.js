@@ -37,12 +37,80 @@ function init() {
 init()
 
 
-var anim = gsap.timeline()
+function mover(){
+    var tl = gsap.timeline()
+    tl.from("#mover .child",{
+      y:"120%",
+      duration:2,
+      skewY:4,
+      stagger:.5,
+      opacity:0,
+      onComplete:function(){
+     setTimeout(() => {
+              const counters = document.querySelectorAll('.value');
+              const speed = 300;
+              
+              counters.forEach( counter => {
+                 const animate = () => {
+                    const value = +counter.getAttribute('akhi');
+                    const data = +counter.innerText;
+                   
+                    const time = value / speed;
+                   if(data < value) {
+                        counter.innerText = Math.ceil(data + time);
+                        setTimeout(animate, 1);
+                      }else{
+                        counter.innerText = value;
+                      }
+                   
+                 }
+                 
+                 animate();
+              });
+             }, 1000);
+        
+         
+         
+      
+      
+     
+      }
+    })
+  
+    tl.to("#mover",{
+      top:"-100%",
+      display:"none",
+      delay:2,
+      duration:3,
+      ease:Expo.ease,
+      onComplete:function(){
+        function pg1t(){
+        
+          var tl = gsap.timeline()
+          tl
+          .to(".cent .child",{
+            opacity:1,
+            y:"0%",
+            duration:2,
+            ease:Circ.ease,
+            skewY:0,
+            // skewY:5,
+            stagger:.5
+          })
+          }
+          pg1t()
+      }
+    })
+   
+   
+// var anim = gsap.timeline()
 
-anim.from(".navbar", {
+.from(".navbar", {
     y: 50,
     opacity: 0,
-    duration: 1
+    duration: 1,
+    stagger:true,
+
 })
 
     .from(".row-center1", {
@@ -68,6 +136,85 @@ anim.from(".navbar", {
         opacity: 0,
         duration: 0.6,
     })
+    
+  
+  }
+  mover()
+
+
+
+
+  function revealToSpan() {
+    document.querySelectorAll(".reveal").forEach(function(elem){
+        
+        let spanParent = document.createElement("span");
+        let spanChild = document.createElement("span");
+        
+        spanParent.classList.add("parent")
+        spanChild.classList.add("child")
+        
+        spanChild.innerHTML = elem.innerHTML;
+        // console.log(spanChild.textContent)
+        spanParent.appendChild(spanChild);
+        
+        elem.textContent = "";
+        elem.appendChild(spanParent);
+    })
+  }
+  revealToSpan()
+
+
+function menu() {
+    var flag = 0
+  
+    document.querySelector(".menu i")
+    .addEventListener("click", function(){
+      if(flag == 0) {
+  
+  
+        document.querySelector("#loader").style.top = "0%"
+        flag = 1
+  
+      }
+      else{
+  
+  
+        document.querySelector("#loader").style.top = "-100%"
+        flag = 0
+  
+      }
+    })
+  }
+  menu()
+
+
+  function close() {
+
+    document.querySelector(".close i")
+    .addEventListener("click", function(){
+        document.querySelector("#loader").style.top="-100%"
+        document.querySelector("#loader").style.transition = "all 1s";
+
+    })
+  }
+
+  close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     document.addEventListener("mousemove", function (dets) {
@@ -366,6 +513,37 @@ anim.from(".navbar", {
     }
 
     page5()
+
+
+    function page6spotify() {
+        var spotifypg6 = document.querySelectorAll("#pg6-video video")
+        spotifypg6.forEach(function (e) {
+    
+            e.addEventListener("mouseenter", function () {
+                document.querySelector("#cursor").innerHTML = "View"
+                e.style.scale = 0.93
+
+                document.querySelector("#cursor").style.scale = 2.8
+                document.querySelector("#cursor").style.backgroundColor = "white"
+                document.querySelector("#cursor").style.borderColor = "white"
+                document.querySelector("#cursor").style.fontWeight = 500
+                document.querySelector("#cursor").style.color = "black"
+
+
+            })
+            e.addEventListener("mouseleave", function () {
+                document.querySelector("#cursor").innerHTML = ""
+                e.style.scale = 1
+
+                document.querySelector("#cursor").style.scale = 1
+                document.querySelector("#cursor").style.backgroundColor = "transparent"
+                document.querySelector("#cursor").style.borderColor = "#e1e1e1"
+            })
+    
+        })
+    }
+
+    page6spotify()
 
 
     // gsap.to("#page7 h1", {
